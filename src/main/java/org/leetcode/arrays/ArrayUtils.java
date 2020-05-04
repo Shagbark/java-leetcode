@@ -30,6 +30,50 @@ public class ArrayUtils {
                 .count();
     }
 
+    /**
+     * Returns array of squared elements.
+     * NOTE: incomming array is sorted!
+     *
+     * @param array an array of integers sorted in non-decreasing order
+     * @return an array of the squares of each number, also in sorted non-decreasing order.
+     */
+    public static int[] squareAndSortArray(int[] array) {
+        int[] result = new int[array.length];
+
+        int p = 0; // positive element index
+        // find the first positive element in array
+        while (p < array.length && array[p] < 0) {
+            p++;
+        }
+
+        int n = p - 1; // last negative element index
+        int r = 0; // result element index
+
+        // loop array until find all positive or all negative elements
+        while (n >= 0 && p < array.length) {
+            if (array[n] * array[n] < array[p] * array[p]) {
+                result[r++] = array[n] * array[n];
+                n--;
+            } else {
+                result[r++] = array[p] * array[p];
+                p++;
+            }
+        }
+
+        // put the last elements into result array
+        while (n >= 0) {
+            result[r++] = array[n] * array[n];
+            n--;
+        }
+
+        while (p < array.length) {
+            result[r++] = array[p] * array[p];
+            p++;
+        }
+
+        return result;
+    }
+
     private static int countDigitsInNumber(int number) {
         int digitCount = 0;
         while (number != 0) {

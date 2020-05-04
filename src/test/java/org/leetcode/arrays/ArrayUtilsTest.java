@@ -3,8 +3,7 @@ package org.leetcode.arrays;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ArrayUtilsTest {
 
@@ -25,6 +24,16 @@ public class ArrayUtilsTest {
         assertThrows(IllegalArgumentException.class, () -> ArrayUtils.countNumbersWithEvenDigitsInArray(new int[500]));
         assertThrows(IllegalArgumentException.class, () -> ArrayUtils.countNumbersWithEvenDigitsInArray(new int[] { -1 }));
         assertThrows(IllegalArgumentException.class, () -> ArrayUtils.countNumbersWithEvenDigitsInArray(new int[] { 100_001 }));
+    }
+
+    @Test
+    @DisplayName("Return array of squared elements sorted in non-decreasing order")
+    public void testSquareAndSortArray() {
+        int[] array = { -4, -2, 0, 2, 5, 6 };
+        int[] expectedResult = { 0, 4, 4, 16, 25, 36 };
+
+        int[] result = ArrayUtils.squareAndSortArray(array);
+        assertArrayEquals(expectedResult, result);
     }
 
 }
