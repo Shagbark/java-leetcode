@@ -1,6 +1,7 @@
 package org.leetcode.arrays;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 public class ArrayUtils {
 
@@ -84,5 +85,70 @@ public class ArrayUtils {
         return digitCount;
     }
 
+    /**
+     * Remove all instances of {@param val} in-place and return the new length of array.
+     * Extra memory doesn't allocated inside the method.
+     *
+     * Note! Method modifies the input array. Method doesn't guarantee order of changed array.
+     *
+     * Since it is not possible in Java to resize an array, the elements that need to be removed
+     * will be moved to the end of the array. If it were possible to use additional memory in this
+     * method, then it was possible to delete elements from the array forever.
+     *
+     * @param numbers array, from which elements will be deleted
+     * @param val value of elements, which will be deleted
+     * @return new length of array
+     */
+    public static int removeElements(int[] numbers, int val) {
+        Objects.requireNonNull(numbers, "An array must be not null");
+        return numbers.length == 0 ? 0 : removeElementsFromArray(numbers, val);
+    }
+
+    /**
+     * This method saves the order of elements in array during removing.
+     * For example, given an array with such elements { 1, 4, 6, 7, 6, 8 }. After executing the method
+     * result will be { 1, 4, 7, 8, 6, 6 }.
+     *
+     * @param array array, from which elements will be deleted
+     * @param val value of elements, which will be deleted
+     * @return new length of array
+     */
+    private static int removeElementsFromArray(int[] array, int val) {
+        int size = array.length;
+        for (int i = 0; i < size;) {
+            if (array[i] == val) {
+                System.arraycopy(array, i + 1, array, i, array.length - i - 1);
+                size--; // decrease size after "removing" element
+            } else {
+                i++;
+            }
+        }
+        return size;
+    }
+
+    /**
+     * This method updates order of elements during removing elements.
+     * For example, given an array with such elements { 1, 4, 6, 7, 6, 8 }. After executing the method
+     * result will be { 1, 4, 8, 7, 6, 6 }.
+     *
+     * @param array array, from which elements will be deleted
+     * @param val value of elements, which will be deleted
+     * @return new length of array
+     */
+    private static int removeElementsFromArrayUsingTwoPointers(int[] array, int val) {
+        int i = 0;
+        int lastIndexToCopy = array.length;
+
+        while (i < lastIndexToCopy) {
+            if (array[i] == val) {
+                array[i] = array[lastIndexToCopy - 1];
+                lastIndexToCopy--;
+            } else {
+                i++;
+            }
+        }
+        return lastIndexToCopy;
+
+    }
 
 }
