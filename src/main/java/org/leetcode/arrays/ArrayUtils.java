@@ -223,10 +223,10 @@ public class ArrayUtils {
         }
 
         int i = 0;
-        while (array[i + 1] > array[i] && i != array.length - 1) {
+        while (i != array.length - 1 && array[i + 1] > array[i]) {
             i++;
         }
-        if (i == array.length - 1) {
+        if (i == array.length - 1 || i == 0) {
             return false; // array is strictly increasing always
         }
         while (i != array.length - 1 && array[i] > array[i + 1]) {
