@@ -168,4 +168,39 @@ public class ArrayUtilsTest {
         assertTrue(result);
     }
 
+    @Test
+    @DisplayName("Throw exception when passed invalid array into isMountainArray() method")
+    public void testIsMountainArray_whenArrayIsNotValid_thenThrowException() {
+        assertThrows(IllegalArgumentException.class, () -> ArrayUtils.isMountainArray(null));
+        assertThrows(IllegalArgumentException.class, () -> ArrayUtils.isMountainArray(new int[1]));
+        assertThrows(IllegalArgumentException.class, () -> ArrayUtils.isMountainArray(new int[2]));
+    }
+
+    @Test
+    @DisplayName("Return true, when array is a mountain array")
+    public void testIsMountainArray_whenArrayIsValid_whenReturnTrue() {
+        int[] array = { 1, 2, 5, 6, 5, 3};
+
+        boolean result = ArrayUtils.isMountainArray(array);
+        assertTrue(result);
+    }
+
+    @Test
+    @DisplayName("Return false, when array is not a mountain array (invalid order in decreasing part")
+    public void testIsMountainArray_whenArrayHasInvalidOrderInDecreasingPart_whenReturnFalse() {
+        int[] array = { 1, 2, 5, 6, 1, 3};
+
+        boolean result = ArrayUtils.isMountainArray(array);
+        assertFalse(result);
+    }
+
+    @Test
+    @DisplayName("Return false, when array is not a mountain array (invalid order in increasing part")
+    public void testIsMountainArray_whenArrayHasInvalidOrderInIncreasingPart_whenReturnFalse() {
+        int[] array = { 1, 34, 5, 56, 4, 3};
+
+        boolean result = ArrayUtils.isMountainArray(array);
+        assertFalse(result);
+    }
+
 }

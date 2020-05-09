@@ -206,4 +206,34 @@ public class ArrayUtils {
         return false;
     }
 
+    /**
+     * Checks if array is a valid mountain array. Recall that array is a mountain array if and
+     * only if:
+     *  - arr.length > 3
+     *  - there is some {@code i} with {@code 0 < i < arr.length - 1} such that:
+     *      - arr[0] < arr[1] < ... < arr[i]
+     *      - arr[i] > arr[i + 1] > ... arr[arr.length - 1]
+     *
+     * @param array array to check
+     * @return true only if array is a mountain array, false otherwise.
+     */
+    public static boolean isMountainArray(int[] array) {
+        if (array == null || array.length < 3) {
+            throw new IllegalArgumentException("Array must not null and contains at least 3 elements");
+        }
+
+        int i = 0;
+        while (array[i + 1] > array[i] && i != array.length - 1) {
+            i++;
+        }
+        if (i == array.length - 1) {
+            return false; // array is strictly increasing always
+        }
+        while (i != array.length - 1 && array[i] > array[i + 1]) {
+            i++;
+        }
+
+        return i == array.length - 1;
+    }
+
 }
