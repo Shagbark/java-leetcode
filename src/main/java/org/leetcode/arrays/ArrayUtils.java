@@ -151,4 +151,59 @@ public class ArrayUtils {
 
     }
 
+    /**
+     * Checks if in the array exists two integers N and M such, that N is the double of M (i.e. N = 2 * M).
+     * Array isn't sorted.
+     *
+     * @param arr array in which need to find double values
+     * @return true, if such integers exist, false otherwise.
+     */
+    public static boolean checkIfDoubleValuesExist(int[] arr) {
+        Objects.requireNonNull(arr, "Input array must be not null.");
+
+        Arrays.sort(arr);
+
+        if (containsSeveralZeros(arr)) {
+            return true;
+        }
+
+        for (int value : arr) {
+            if (value % 2 == 0 && value != 0) {
+                int m = value / 2;
+                if (binarySearch(arr, m)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private static boolean containsSeveralZeros(int[] arr) {
+        int zeroCount = 0;
+        for (int value : arr) {
+            if (value == 0 && ++zeroCount == 2) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static boolean binarySearch(int[] array, int value) {
+        int start = 0;
+        int end = array.length - 1;
+
+        while (start <= end) {
+            int mid = (start + end) / 2;
+            if (array[mid] == value) {
+                return true;
+            } else if (array[mid] > value) {
+                end = mid - 1;
+            } else {
+                start = mid + 1;
+            }
+        }
+
+        return false;
+    }
+
 }

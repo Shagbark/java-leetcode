@@ -1,9 +1,9 @@
 package org.leetcode.arrays;
 
-import java.util.Arrays;
-import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -117,6 +117,55 @@ public class ArrayUtilsTest {
 
         boolean containsValue = Arrays.stream(array).limit(result).anyMatch(el -> el == value);
         assertFalse(containsValue);
+    }
+
+    @Test
+    @DisplayName("Throw NullPointerException when array in method checkIfDoubleValuesExist() is null")
+    public void testCheckIfDoubleValuesExist_whenArrayIsNull_thenThrowNullPointerException() {
+        assertThrows(NullPointerException.class, () -> ArrayUtils.checkIfDoubleValuesExist(null));
+    }
+
+    @Test
+    @DisplayName("Return false when array in method checkIfDoubleValuesExist() is empty")
+    public void testCheckIfDoubleValuesExist_whenArrayIsEmpty_thenReturnFalse() {
+        boolean result = ArrayUtils.checkIfDoubleValuesExist(new int[0]);
+        assertFalse(result);
+    }
+
+    @Test
+    @DisplayName("Return false when no double values in array, which was passed to method checkIfDoubleValuesExist()")
+    public void testCheckIfDoubleValuesExist_whenArrayDoesNotContainDoubleValues_thenReturnFalse() {
+        int[] array = {43, 5, 4, 6, 59};
+
+        boolean result = ArrayUtils.checkIfDoubleValuesExist(array);
+        assertFalse(result);
+    }
+
+    @Test
+    @DisplayName("Return true when double values exist in an array, which was passed to method checkIfDoubleValuesExist()")
+    public void testCheckIfDoubleValuesExist_whenArrayContainsDoubleValues_thenReturnTrue() {
+        int[] array = {2, 5, 4, 6, 59};
+
+        boolean result = ArrayUtils.checkIfDoubleValuesExist(array);
+        assertTrue(result);
+    }
+
+    @Test
+    @DisplayName("Return true when no double values in an array (array contains negative values), which was passed to method checkIfDoubleValuesExist()")
+    public void testCheckIfDoubleValuesExist_whenArrayContainsNegativeValues_thenReturnFalse() {
+        int[] array = {-2, 0, 10, 19, 4, 6, -8};
+
+        boolean result = ArrayUtils.checkIfDoubleValuesExist(array);
+        assertFalse(result);
+    }
+
+    @Test
+    @DisplayName("Return true when double values exist in an array, which was passed to method checkIfDoubleValuesExist()")
+    public void testCheckIfDoubleValuesExist_whenArrayContainsSeveralZeros_thenReturnTrue() {
+        int[] array = {-2, 0, 10, 19, 4, 0, -8};
+
+        boolean result = ArrayUtils.checkIfDoubleValuesExist(array);
+        assertTrue(result);
     }
 
 }
