@@ -57,4 +57,28 @@ public final class Recursion {
         return newHead;
     }
 
+    /**
+     * Reverse a singly linked list recursively.
+     *
+     * @param head first element of the list
+     * @return a new head of list.
+     */
+    public static ListNode reverseList(ListNode head) {
+        Objects.requireNonNull(head, "Head of linked list must be not null");
+
+        return reverseListRecursively(head);
+    }
+
+    private static ListNode reverseListRecursively(ListNode head) {
+        if (head == null || head.getNext() == null) {
+            return head;
+        }
+
+        ListNode el = reverseListRecursively(head.getNext());
+        head.getNext().setNext(head);
+        head.setNext(null);
+
+        return el;
+    }
+
 }

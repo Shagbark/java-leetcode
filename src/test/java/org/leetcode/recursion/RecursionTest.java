@@ -105,4 +105,58 @@ public class RecursionTest {
         assertSame(third, result.getNext().getNext().getNext());
     }
 
+    @Test
+    @DisplayName("reverseList(ListNode): throw NullPointerException if passed head is null")
+    public void testReverseList_whenHeadIsNull_thenNullPointerException() {
+        assertThrows(NullPointerException.class, () -> Recursion.reverseList(null));
+    }
+
+    @Test
+    @DisplayName("reverseList(ListNode): return the same head, if list contains only one element")
+    public void testReverseList_whenListContainsOnlyOneElement_thenReturnTheSameHead() {
+        ListNode head = new ListNode(20);
+
+        ListNode result = Recursion.reverseList(head);
+        assertSame(head, result);
+    }
+
+    @Test
+    @DisplayName("reverseList(ListNode): swap elements in list, when it contains only two elements")
+    public void testReverseList_whenListContainsTwoElements_thenTheyMustBeSwapped() {
+        ListNode second = new ListNode(25);
+        ListNode first = new ListNode(20, second);
+
+        ListNode result = Recursion.reverseList(first);
+        assertSame(second, result);
+        assertSame(first, result.getNext());
+    }
+
+    @Test
+    @DisplayName("reverseList(ListNode): reverse all elements, when list contains odd count of elements")
+    public void testReverseList_whenListContainsOddCountOfElements_thenDoNotSwapTheLastElement() {
+        ListNode third = new ListNode(20);
+        ListNode second = new ListNode(15, third);
+        ListNode first = new ListNode(10, second);
+
+        ListNode result = Recursion.reverseList(first);
+        assertSame(third, result);
+        assertSame(second, result.getNext());
+        assertSame(first, result.getNext().getNext());
+    }
+
+    @Test
+    @DisplayName("reverseList(ListNode): reverse all elements, when list contains even count of elements")
+    public void testReverseList_whenListContainsEvenCountOfElements_thenSwapAllElements() {
+        ListNode forth = new ListNode(25);
+        ListNode third = new ListNode(20, forth);
+        ListNode second = new ListNode(15, third);
+        ListNode first = new ListNode(10, second);
+
+        ListNode result = Recursion.reverseList(first);
+        assertSame(forth, result);
+        assertSame(third, result.getNext());
+        assertSame(second, result.getNext().getNext());
+        assertSame(first, result.getNext().getNext().getNext());
+    }
+
 }
