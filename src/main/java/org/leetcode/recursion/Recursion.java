@@ -90,10 +90,24 @@ public final class Recursion {
      * @return the subtree rooted with node, which value equals to passed val or null
      *         if such no doesn't exist.
      */
-    private static TreeNode searchBST(TreeNode root, int val) {
+    public static TreeNode searchBST(TreeNode root, int val) {
         Objects.requireNonNull(root, "The root of binary search tree must be not null");
 
-       return null;
+       return searchSubtreeInBST(root, val);
+    }
+
+    private static TreeNode searchSubtreeInBST(TreeNode node, int val) {
+        if (node == null) {
+            return null;
+        }
+
+        if (node.getVal() == val) {
+            return node;
+        }
+
+        return val < node.getVal() ?
+                searchSubtreeInBST(node.getLeft(), val) :
+                searchSubtreeInBST(node.getRight(), val);
     }
 
 }
