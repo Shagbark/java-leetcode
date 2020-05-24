@@ -1,5 +1,8 @@
 package org.leetcode.recursion;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 public final class Recursion {
@@ -108,6 +111,43 @@ public final class Recursion {
         return val < node.getVal() ?
                 searchSubtreeInBST(node.getLeft(), val) :
                 searchSubtreeInBST(node.getRight(), val);
+    }
+
+    /**
+     * Return a list of numbers that are on the transmitted line of Pascal's triangle.
+     *
+     * @param rowIndex row number in Pascal's Triangle. Must be non-negative value and less than 33 (inclusive)
+     * @return values in the row in Pascal's Triangle
+     * @throws IllegalArgumentException if row index is negative or more than 33
+     */
+    public static List<Integer> getRowInPascalTriangle(int rowIndex) {
+        if (rowIndex < 0 || rowIndex > 33) {
+            throw new IllegalArgumentException("Row index must be non-negative value and less than 33");
+        }
+
+        return getRow(rowIndex);
+    }
+
+    private static List<Integer> getRow(int rowIndex) {
+        if (rowIndex == 0) {
+            //noinspection ArraysAsListWithZeroOrOneArgument
+            return Arrays.asList(1);
+        }
+        if (rowIndex == 1) {
+            return Arrays.asList(1, 1);
+        }
+
+        // go to the previous row
+        List<Integer> previousRow = getRow(rowIndex - 1);
+        List<Integer> currentRow = new ArrayList<>();
+
+        currentRow.add(1); // first value in row is always equals to 1
+        for (int i = 1; i < previousRow.size(); i++) {
+            currentRow.add(previousRow.get(i) + previousRow.get(i-1));
+        }
+        currentRow.add(1); // second value in row is always equals to 1
+
+        return currentRow;
     }
 
 }

@@ -1,5 +1,8 @@
 package org.leetcode.recursion;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -8,6 +11,11 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtensionContext;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.ArgumentsProvider;
+import org.junit.jupiter.params.provider.ArgumentsSource;
 
 public class RecursionTest {
 
@@ -233,5 +241,59 @@ public class RecursionTest {
         TreeNode result = Recursion.searchBST(root, 2);
         assertNull(result);
     }
+
+    @Test
+    @DisplayName("getRowInPascalTriangle(int): throw IllegalArgumentException, when row index is negative")
+    public void testGetRowInPascalTriangle_whenRowIndexIsNegative_thenThrowIllegalArgumentException() {
+        assertThrows(IllegalArgumentException.class, () -> Recursion.getRowInPascalTriangle(-1));
+    }
+
+    @Test
+    @DisplayName("getRowInPascalTriangle(int): throw IllegalArgumentException, when row index is more than 33")
+    public void testGetRowInPascalTriangle_whenRowIndexIsMoreThan33_thenThrowIllegalArgumentException() {
+        assertThrows(IllegalArgumentException.class, () -> Recursion.getRowInPascalTriangle(34));
+    }
+
+    @Test
+    @DisplayName("getRowInPascalTriangle(int): return [1], when row index is 0")
+    public void testGetRowInPascalTriangle_whenRowIndexIs0_thenReturnListFromOneElement() {
+        List<Integer> result = Recursion.getRowInPascalTriangle(0);
+        assertEquals(1, result.size());
+        assertEquals(Integer.valueOf(1), result.get(0));
+    }
+
+    @Test
+    @DisplayName("getRowInPascalTriangle(int): return [1, 1], when row index is 1")
+    public void testGetRowInPascalTriangle_whenRowIndexIs1_thenReturnListWithTwoUnits() {
+        List<Integer> result = Recursion.getRowInPascalTriangle(1);
+        assertEquals(2, result.size());
+        assertEquals(Integer.valueOf(1), result.get(0));
+        assertEquals(Integer.valueOf(1), result.get(1));
+    }
+
+    @ParameterizedTest
+    @ArgumentsSource(PascalTriangleArgumentsProvider.class)
+    @DisplayName("getRowInPascalTriangle(int): return a list of numbers on a particular line of the triangle")
+    public void testGetRowInPascalTriangle_whenRowIndexIs2_thenReturnListOfElements(int rowIndex, List<Integer> expected) {
+         List<Integer> result = Recursion.getRowInPascalTriangle(rowIndex);
+
+         for (int i = 0; i < result.size(); i++) {
+             assertEquals(expected.get(i), result.get(i));
+         }
+    }
+
+    static class PascalTriangleArgumentsProvider implements ArgumentsProvider {
+        @Override
+        public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
+            return Stream.of(
+                    Arguments.of(2, Arrays.asList(1, 2, 1)),
+                    Arguments.of(3, Arrays.asList(1, 3, 3, 1)),
+                    Arguments.of(4, Arrays.asList(1, 4, 6, 4, 1)),
+                    Arguments.of(5, Arrays.asList(1, 5, 10, 10, 5, 1)),
+                    Arguments.of(6, Arrays.asList(1, 6, 15, 20, 15, 6, 1))
+            );
+        }
+    }
+
 
 }
