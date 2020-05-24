@@ -81,4 +81,19 @@ public final class Recursion {
         return el;
     }
 
+    /**
+     * Find a node in binary search tree that the node's value equals the given
+     * value.
+     *
+     * @param root root node of binary search tree
+     * @param val value which node must contain
+     * @return the subtree rooted with node, which value equals to passed val or null
+     *         if such no doesn't exist.
+     */
+    private static TreeNode searchBST(TreeNode root, int val) {
+        Objects.requireNonNull(root, "The root of binary search tree must be not null");
+
+       return null;
+    }
+
 }
